@@ -1,179 +1,312 @@
-# Space_shooter_C-
-Space Shooter Game in C++ using OOP
+# 🚀 Space Shooter Game
 
-**Group Members**
+> A **classic 2D space shooter game** built with C++ demonstrating object-oriented programming principles. Features dynamic enemy spawning, collision detection, and progressive difficulty.
 
-Abdullah		24k-0859 (Group Leader)
+<div align="center">
 
-Hammad		24k-0544
+![C++](https://img.shields.io/badge/C%2B%2B-00599C?style=flat-square&logo=c%2B%2B&logoColor=white)
+![OOP](https://img.shields.io/badge/OOP-Game%20Design-blue?style=flat-square)
+![Gameplay](https://img.shields.io/badge/Gameplay-Action-brightgreen?style=flat-square)
+![License: MIT](https://img.shields.io/badge/License-MIT-green.svg?style=flat-square)
 
-Abdul Majid		24k-0895
+[Features](#features) • [Getting Started](#getting-started) • [Controls](#controls) • [Gameplay](#gameplay) • [Architecture](#architecture)
 
-**Submission Date** 
+</div>
 
-11th May 2025 
+---
 
-**1\. Executive Summary** 
+## ✨ Features
 
-• **Overview**: A 2D space shooter game developed in C++ with Raylib, showcasing OOP principles. The game features:
+- **Classic Gameplay** - Intuitive space shooter mechanics
+- **Enemy Waves** - Progressive difficulty with increasing enemy spawns
+- **Collision Detection** - Accurate hit detection for bullets and enemies
+- **Score System** - Points for destroying enemies
+- **Lives System** - Multiple lives before game over
+- **Power-ups** - Special items to enhance gameplay
+- **OOP Architecture** - Well-structured object-oriented design
+- **Smooth Animation** - Real-time graphics rendering
+- **Game States** - Menu, playing, paused, game over screens
 
-- Polymorphic enemy classes (`EnemyLevel1`, `EnemyLevel2`, `EnemyLevel3`) with unique health/damage values.  
-- Player controls (WASD/arrows), bullet firing (spacebar), and collision systems.  
-- Dynamic UI (health bar, score) and game states (start menu, gameplay, win/loss screens).
+---
 
-• **Key Findings**: 
+## 🛠️ Tech Stack
 
-- Achieved polymorphism via abstract `Enemy` base class and virtual functions (`GetDamageOnCollision()`, `GetScoreValue()`).  
-- Implemented resource management (textures, sounds) with RAII (e.g., `UnloadTexture` in destructors).  
-- Used composition for `Player`\-`Bullet` interactions and aggregation for `Enemy` collections.
+| Component | Technology |
+|-----------|-----------|
+| **Language** | C++17 |
+| **Graphics** | Raylib 4.5+ |
+| **Architecture** | Object-Oriented Design |
+| **Build System** | CMake / Makefile |
 
-**2\. Introduction** 
+---
 
-• **Background**: The project demonstrates OOP concepts in game development, emphasizing:
+## 📁 Project Structure
 
-- **Inheritance**: Enemy hierarchy (`Enemy` → `EnemyLevel1/2/3`).  
-- **Encapsulation**: Private members (e.g., `Player::position`) with public methods.  
-- **Polymorphism**: Enemy behaviors via overridden `Update()` and abstract methods.
+```
+Space_shooter_CPP/
+├── 📂 src/                      # Source code
+│   ├── main.cpp                 # Game entry point
+│   ├── game.cpp                 # Main game loop
+│   ├── player.cpp               # Player character
+│   ├── enemy.cpp                # Enemy logic
+│   ├── bullet.cpp               # Projectile system
+│   ├── collision.cpp            # Collision detection
+│   └── button.cpp               # UI buttons
+│
+├── 📂 include/                  # Header files
+│   ├── game.h
+│   ├── player.h
+│   ├── enemy.h
+│   ├── bullet.h
+│   ├── entity.h
+│   └── button.h
+│
+├── 📂 assets/                   # Game resources
+│   ├── sprites/
+│   ├── sounds/
+│   └── textures/
+│
+├── 📄 CMakeLists.txt           # CMake configuration
+├── 📄 Makefile                 # Make configuration
+└── 📄 README.md                # This file
+```
 
-• **Project Objectives**: 
+---
 
-- Build a modular game with scalable enemy/player systems.  
-- Integrate Raylib for graphics/audio while maintaining clean OOP design.
+## 🚀 Getting Started
 
-**3\. Project Description** 
+### Prerequisites
 
-• **Scope**: 
+- **C++17 or later** compiler (GCC, Clang, MSVC)
+- **CMake** 3.10+ or **Make**
+- **Raylib** graphics library
+- **Git** for version control
 
-- **Core Mechanics**:  
-  * Player movement/shooting (`Player::FireBullet()`).  
-  * Enemy spawning with difficulty scaling (score-based `EnemyLevel` selection).  
-  * AABB collision detection (`CheckCollisionRecs`).  
-- **Features**:  
-  * Health system (`Player::TakeDamage()`).  
-  * Explosion animations (sprite sheets).  
-  * Scrolling background and sound effects.
+### Installation
 
-• **Technical Overview**: 
+#### 1. Clone the Repository
 
-- **Language**: C++17.  
-- **Library**: Raylib 4.5 (graphics, audio, input).  
-- **Toolchain**: Visual Studio Code (Windows).
+```bash
+git clone https://github.com/MuhammadHammadCS/Space_shooter_CPP.git
+cd Space_shooter_CPP
+```
 
-**4\. Methodology** 
+#### 2. Install Raylib
 
-• **Approach**: 
+**On Ubuntu/Debian:**
+```bash
+sudo apt-get install libraylib-dev
+```
 
-- **Iterative Development**: Weekly sprints (player → enemies → UI → polish).  
-- **Testing**: Unit tests for collision logic; playtesting for balance.
+**On macOS (with Homebrew):**
+```bash
+brew install raylib
+```
 
-• **Roles and Responsibilities**: 
+**On Windows:**
+- Download from [Raylib Website](https://www.raylib.com)
+- Follow installation instructions
 
-- **Abdullah** \- Enemy Class, Ship collision.  
-- **Hammad**: Player Class, driver program.  
-- **Abdul Majid**: Bullet Class, scoring, collision logic.
+#### 3. Build the Project
 
- **5\. Project Implementation** 
+**Using CMake:**
+```bash
+mkdir build
+cd build
+cmake ..
+cmake --build .
+```
 
-        • **Design and Structure**: The project follows a modular, object-oriented design with clear separation of responsibilities. The structure is organized into classes that handle specific game elements, ensuring maintainability and scalability. 
+**Using Make:**
+```bash
+make
+```
 
- **Class Hierarchy & Relationships**
+#### 4. Run the Game
 
-- **Core Classes**:  
-  * `Entity` **(Base Class)**:  
-    * Provides common attributes (`position`, `speed`, `active` state).  
-    * Inherited by `Player`, `Enemy`, and `Bullet` for shared functionality.  
-  * `Player`:  
-    * Handles movement (WASD/arrow keys), shooting (`FireBullet()`), and health management.  
-    * Aggregates `Bullet` objects (composition).  
-  * `Enemy` **(Abstract Base Class)**:  
-    * Defines virtual methods (`GetDamageOnCollision()`, `GetScoreValue()`).  
-    * Derived classes (`EnemyLevel1`, `EnemyLevel2`, `EnemyLevel3`) implement polymorphic behaviors.  
-  * `Bullet`:  
-    * Manages trajectory, collision, and active state.  
-- **Utility Classes**:  
-  * `Button`:  
-    * Handles UI buttons (start, exit) with collision detection (`isPressed()`).  
-    * Supports scaling and texture resizing.  
-- **Game Flow**:  
-  * **States**: Menu (`current_screen = 0`), Gameplay (`1`), Rules (`2`), Game Over (`3`), Win (`4`).  
-  * **Game Loop**:  
-    * **Update**: Processes input, collisions, and enemy spawning.  
-    * **Render**: Draws textures, UI, and animations (60 FPS).
+```bash
+./SpaceShooter
+# or
+./build/SpaceShooter
+```
 
-  • **Functionalities Developed**: 
+---
 
- **1\. Player System**
+## 🎮 Controls
 
-- **Movement**:  
-  * Smooth controls via `KEY_WASD` or arrow keys.  
-  * Screen boundary checks (e.g., `position.x = clamp(0, screenWidth)`).  
-- **Shooting**:  
-  * Spacebar triggers `FireBullet()`, spawning bullets from player position.  
-  * Bullets are managed in a `vector<Bullet>` with auto-cleanup (`DeleteInactiveBullets()`).  
-- **Health & UI**:  
-  * Health bar (visualized via `DrawHealthBar()`).  
-  * Explosion animation on death (sprite sheet with frame tracking).
+| Key | Action |
+|-----|--------|
+| **W / ↑** | Move up |
+| **A / ←** | Move left |
+| **S / ↓** | Move down |
+| **D / →** | Move right |
+| **Space** | Fire bullets |
+| **P** | Pause/Resume |
+| **ESC** | Back to menu / Quit |
+| **R** | Restart game (after game over) |
 
- **2\. Enemy System**
+---
 
-- **Polymorphic Enemies**:  
-  * `EnemyLevel1`: 1 HP, 10 damage, 10 score.  
-  * `EnemyLevel2`: 2 HP, 20 damage, 20 score.  
-  * `EnemyLevel3`: 3 HP, 30 damage, 30 score.  
-- **Spawning Logic**:  
-  * Enemies spawn based on player score (e.g., `EnemyLevel2` at `score >= 100`).  
-  * Randomized positions (`GetRandomValue()`).
+## 🎯 Gameplay
 
- **3\. Collision & Combat**
+### Objective
+Destroy enemy spacecraft while avoiding their fire to survive as long as possible.
 
-- **Bullet-Enemy**:  
-  * AABB collision (`CheckCollisionRecs`).  
-  * Bullets deactivate on hit; enemies take damage (`TakeDamage()`).  
-- **Player-Enemy**:  
-  * Collision reduces player health by enemy-specific damage.  
-  * Triggers explosion sound (`PlaySound(boom)`).
+### How to Play
 
- **4\. UI & Game States**
+1. **Start Game** - Select "Play" from main menu
+2. **Move Ship** - Use WASD or arrow keys to navigate
+3. **Fire Bullets** - Press Space to shoot at enemies
+4. **Destroy Enemies** - Each enemy destroyed adds points
+5. **Survive** - Avoid enemy bullets to keep your lives
+6. **Game Over** - Lose all lives or achieve win condition
 
-- **Menu Screens**:  
-  * Start, Rules, and Exit buttons (`Button` class).  
-  * Scrolling background for visual polish.  
-- **Win/Loss Conditions**:  
-  * **Game Over**: `Player::health <= 0`.  
-  * **Win**: `Player::score >= 500`.
+### Game Mechanics
 
- **5\. Resource Management**
+**Lives System:**
+- Start with 3 lives
+- Lose a life when hit by enemy bullet
+- Game over when all lives are lost
 
-- **Textures/Sounds**:  
-  * Loaded on startup (`LoadTexture()`).  
-  * Freed in destructors (e.g., `~Player()` unloads `img`, `explosionTexture`).  
-- **Memory Safety**:  
-  * Enemy objects stored in `vector<Enemy*>` with manual cleanup (`delete` in `ResetGame()`).
+**Scoring:**
+- Enemy Level 1: 10 points per kill
+- Enemy Level 2: 20 points per kill
+- Enemy Level 3: 30 points per kill
 
-  • **Challenges Faced**: 
+**Difficulty Progression:**
+- Enemy Level 1 appears at game start
+- Enemy Level 2 spawns at score 100+
+- Enemy Level 3 spawns at score 260+
+- Enemies spawn more frequently as score increases
 
-- **Collision Bugs**: Fixed iterator invalidation in `CheckForCollisions`.  
-- **Texture Errors**: Validated asset paths via `LoadTexture` checks.
+### Enemy Types
 
-**6\. Results** 
+| Enemy Type | Health | Damage | Points |
+|-----------|--------|--------|--------|
+| **Level 1** | 1 HP | 10 damage | 10 pts |
+| **Level 2** | 2 HP | 20 damage | 20 pts |
+| **Level 3** | 3 HP | 30 damage | 30 pts |
 
-• **Project Outcomes**: 
+---
 
-- Functional game with 3 enemy types, scoring, and health systems.  
-- Achieved 60 FPS on mid-range hardware.  
-    
-    
-    
-  • **Screenshots and Illustrations**:   
-  ![][image1]   
-  ![][image2]  
-  • **Testing and Validation**:   
-- Validated enemy spawn logic (score thresholds: 100, 260).  
-- Confirmed collision accuracy via debug logs. 
+## 🏗️ Architecture
 
-**7\. Conclusion** 
+### Class Hierarchy
 
-• **Summary of Findings**: Successfully applied OOP principles to create an engaging game. It provided experience in class hierarchy design, game logic.
+**Entity (Base Class):**
+- Shared attributes (position, speed, active state)
 
-• **Final Remarks**: This project deepened our understanding of C++, OOP and game development. Future improvements could include power ups, final boss enemies etc. 
+**Player:**
+- Movement and controls
+- Bullet firing mechanism
+- Health management
+- Collision handling
 
+**Enemy (Abstract Base):**
+- Virtual methods for polymorphism
+- Enemy Level 1, 2, 3 implementations
+- Unique damage and score values
+
+**Bullet:**
+- Projectile movement
+- Collision detection
+- Active/inactive state
+
+**Button (UI):**
+- Menu buttons
+- Collision detection
+- Event handling
+
+---
+
+## 📊 Game States
+
+```
+┌─────────────────┐
+│   Main Menu     │
+└────────┬────────┘
+         │
+    ┌────▼────┐
+    │  Play   │
+    └────┬────┘
+         │
+    ┌────▼────────────┐
+    │  Game Playing    │
+    └────┬────────────┘
+         │
+    ┌────▼────────────┐
+    │  Game Over / Win │
+    └─────────────────┘
+```
+
+---
+
+## 💡 OOP Concepts Demonstrated
+
+- **Inheritance** - Enemy hierarchy (base class → Level 1/2/3)
+- **Polymorphism** - Virtual methods in Enemy class
+- **Encapsulation** - Private data members with public methods
+- **Composition** - Player contains Bullets
+- **Abstraction** - Entity base class for common functionality
+
+---
+
+## 📈 Possible Enhancements
+
+- [ ] Boss enemy waves
+- [ ] Weapon upgrades and power-ups
+- [ ] High score leaderboard
+- [ ] Particle effects system
+- [ ] Background music and sound effects
+- [ ] Different game difficulty levels
+- [ ] Multiplayer mode
+- [ ] Achievement system
+
+---
+
+## 🎯 Gameplay Tips
+
+- **Stay Mobile** - Keep moving to avoid enemy fire
+- **Focus Fire** - Concentrate bullets on one enemy
+- **Manage Health** - Prioritize survival over scoring
+- **Pattern Recognition** - Learn enemy movement patterns
+- **Watch Ammunition** - Keep firing for continuous damage
+
+---
+
+## 📜 License
+
+This project is licensed under the **MIT License** - see [LICENSE](LICENSE) file for details.
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome! Feel free to:
+1. Fork the repository
+2. Create a feature branch
+3. Submit a pull request
+
+---
+
+## 🎓 Learning Outcomes
+
+This project demonstrates:
+- ✅ Object-oriented programming principles
+- ✅ Game loop implementation
+- ✅ Collision detection systems
+- ✅ Entity management
+- ✅ State machine patterns
+- ✅ Graphics rendering with Raylib
+- ✅ Input handling and event processing
+- ✅ Performance optimization
+
+---
+
+<div align="center">
+
+**Created with ❤️ by Muhammad Hammad**
+
+[⬆ back to top](#-space-shooter-game)
+
+</div>
